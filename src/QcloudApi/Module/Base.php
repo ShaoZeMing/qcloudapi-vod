@@ -18,6 +18,13 @@ abstract class QcloudApi_Module_Base extends QcloudApi_Common_Base
     protected $_serverHost = '';
 
     /**
+     * $_serverPort
+     * 接口端口或代理端口
+     * @var int
+     */
+    protected $_serverPort = '';
+
+    /**
      * $_serverUri
      * url路径
      * @var string
@@ -90,9 +97,17 @@ abstract class QcloudApi_Module_Base extends QcloudApi_Common_Base
                     $this->setConfigRequestMethod($val);
                     break;
 
+                case 'ServerHost':
+                    $this->setConfigServerHost($val);
+                    break;
+
+                case 'ServerPort':
+                    $this->setConfigServerPort($val);
+                    break;
+
                 default:
                     ;
-                break;
+                    break;
             }
         }
 
@@ -144,6 +159,28 @@ abstract class QcloudApi_Module_Base extends QcloudApi_Common_Base
     }
 
     /**
+     * setConfigRequestMethod
+     * 设置服务器域名
+     * @param string $host
+     */
+    public function setConfigServerHost($host)
+    {
+        $this->_serverHost = $host;
+        return $this;
+    }
+
+    /**
+     * setConfigServerPort
+     * 设置服务器端口
+     * @param int $port
+     */
+    public function setConfigServerPort($port)
+    {
+        $this->_serverPort = $port;
+        return $this;
+    }
+
+    /**
      * getLastRequest
      * 获取上次请求的url
      * @return
@@ -183,7 +220,7 @@ abstract class QcloudApi_Module_Base extends QcloudApi_Common_Base
             $params['Region'] = $this->_defaultRegion;
 
         return QcloudApi_Common_Request::generateUrl($params, $this->_secretId, $this->_secretKey, $this->_requestMethod,
-                                                   $this->_serverHost, $this->_serverUri);
+            $this->_serverHost, $this->_serverUri);
     }
 
     /**
@@ -223,7 +260,7 @@ abstract class QcloudApi_Module_Base extends QcloudApi_Common_Base
         require_once QCLOUDAPI_ROOT_PATH . '/Common/Request.php';
 
         $response = QcloudApi_Common_Request::send($params, $this->_secretId, $this->_secretKey, $this->_requestMethod,
-                                                   $this->_serverHost, $this->_serverUri);
+            $this->_serverHost, $this->_serverUri);
 
         return $response;
     }

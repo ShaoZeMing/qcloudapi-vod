@@ -32,8 +32,10 @@
 
 `require_once $xx_path.'/vendor/autoload.php'`
 
-** 注：`$xx_path`基于api文件减压目录路径 **
+注：`$xx_path`指的是基于api文件减压目录路径
 该核心类会自动基于composer.json 加载相应的类文件。
+
+
 
 
 

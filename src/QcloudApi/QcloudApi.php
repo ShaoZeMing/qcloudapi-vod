@@ -12,7 +12,7 @@ class QcloudApi
      * 用户账户
      */
     const MODULE_ACCOUNT   = 'account';
-    
+
     /**
      * MODULE_CVM
      * 云服务器
@@ -36,7 +36,7 @@ class QcloudApi
      * 产品售卖
      */
     const MODULE_TRADE = 'trade';
-    
+
     /**
      * MODULE_BILL
      * 账单
@@ -78,33 +78,39 @@ class QcloudApi
      * VOD
      */
     const MODULE_VOD = 'vod';
-    
+
+    /**
+     * MODULE_VOD
+     * VOD
+     */
+    const MODULE_VOD_UPLOAD = 'vodUpload';
+
     /**
      * YUNSOU
      */
     const MODULE_YUNSOU = 'yunsou';
-	
+
 	  /**
      * cns
      */
     const MODULE_CNS = 'cns';
-	
+
 	  /**
      * wenzhi
      */
     const MODULE_WENZHI = 'wenzhi';
-    
+
     /**
      * MARKET
      */
     const MODULE_MARKET = 'market';
-    
+
     /**
      * MODULE_EIP
      * 弹性公网Ip
      */
     const MODULE_EIP = 'eip';
-    
+
     /**
      * MODULE_LIVE
      * 直播
@@ -122,25 +128,25 @@ class QcloudApi
      * 云硬盘
      */
     const MODULE_CBS = 'cbs';
-    
+
     /**
      * MODULE_SCALING
      * 弹性伸缩
      */
     const MODULE_SCALING = 'scaling';
-    
+
     /**
      * MODULE_CMEM
      * 云缓存
      */
     const MODULE_CMEM = 'cmem';
-    
+
     /**
      * MODULE_TDSQL
      * 云数据库TDSQL
      */
     const MODULE_TDSQL = 'tdsql';
-    
+
         /**
      * MODULE_BM
      * 黑石BM

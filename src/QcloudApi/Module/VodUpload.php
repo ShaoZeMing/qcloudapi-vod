@@ -4,14 +4,22 @@ require_once QCLOUDAPI_ROOT_PATH . '/Module/Base.php';
  * QcloudApi_Module_Vod
  * 视频云模块类
  */
-class QcloudApi_Module_Vod extends QcloudApi_Module_Base
+class QcloudApi_Module_VodUpload extends QcloudApi_Module_Base
 {
     /**
      * $_serverHost
      * 接口域名
      * @var string
      */
-    protected $_serverHost = 'vod.api.qcloud.com';
+    protected $_serverHost = 'vod.qcloud.com';
+    
+//    public function __construct()
+//    {
+//        //目前只支持POST方法
+//        if($this->_requestMethod != 'POST')
+//            $this->_requestMethod = 'POST';
+//    }
+    
     /**
      * MultipartUploadVodFile
      * 上传视频文件
@@ -21,7 +29,7 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
     public function MultipartUploadVodFile($params)
     {
         $name = 'MultipartUploadVodFile';
-
+        
         //设置API请求参数
         if(!isset($params['fileName']))
         {
@@ -38,10 +46,10 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
             echo $params['fileName']."  不存在，请检测\n";
             return false;
         }
-
+        
         $fileSha = sha1_file($params['fileName']);
         $fileSize = filesize($params['fileName']);
-
+        
         //不包含路径的全文件名
         //$fileName = basename($params['fileName']);
         //防止中文文件名中有空格
@@ -50,13 +58,13 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
             $fileName = $params['fileName'];
         else
             $fileName = substr($params['fileName'],$len_dir+1);
-
+        
         //不包含路径且无后缀的文件名
         $pos_dot = (int)strrpos($fileName,'.');
 
         $fileType = substr($fileName,$pos_dot+1);
         $fileName_NoSurfix = substr($fileName,0,$pos_dot);
-
+        
         //分片大小 未设置选择512KB
         if(!isset($params['dataSize']))
         {
@@ -66,30 +74,30 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
         {
             $sliceSize = $params['dataSize'];
         }
-
+        
         $nextOffset = 0;
         static $retry_times = 0;
-
+        
         while(true)
         {
             //随机整数，每次发送分片时都要变化
             $Nonce = rand(0,1000000);
-
+            
             $timestamp = time();
-
-            //如果是网络问题出错重传
+            
+            //如果是网络问题出错重传 
             if($retry_times != 0)
             {
                 $nextOffset = 0;
                 $sliceSize = 1024*512;
             }
-
+            
             //最后一个分片大小选择实际剩余的还为发送的大小
             if($fileSize - $nextOffset < $sliceSize)
             {
                 $sliceSize = $fileSize - $nextOffset;
             }
-
+            
             //封装API参数
             $arguments = array(
                 'Action' => $name,
@@ -109,27 +117,27 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
                 'offset' => $nextOffset,
                 'notifyUrl' => isset($params['notifyUrl'])?$params['notifyUrl']:""
             );
-
+            
             //读取要发送的文件内容
             $fp = fopen($params['fileName'],"rb");
-
+            
             if(!$fp)
             {
                 echo $params['fileName']." 文件打开错误";
                 return false;
             }
-
+            
             fseek($fp,$nextOffset);
             $data = fread($fp,$sliceSize);
             fclose($fp);
-
+            
             $response = $this->dispatchRequest($name, array($arguments),$data);
-
+            
             if(!$response)
             {
                 $this->setError("", 'request falied!');
                 $retry_times++;
-
+                
                 if($retry_times > 3)
                     return false;
                 else
@@ -138,7 +146,7 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
                     continue;
                 }
             }
-
+            
             //执行成功
             if($response['code'] == 0)
             {
@@ -161,9 +169,9 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
                 echo $response['msg'];
                 return false;
             }
-        }
+        }       
     }
-
+    
     /**
      * dispatchRequest
      * 发起接口请求
@@ -174,28 +182,28 @@ class QcloudApi_Module_Vod extends QcloudApi_Module_Base
      */
     protected function dispatchRequest($name, $arguments,$data)
     {
-
+        
         $action = ucfirst($name);
-
+    
         $params = array();
         if (is_array($arguments) && !empty($arguments)) {
             $params = (array) $arguments[0];
         }
         $params['Action'] = $action;
-
+    
         if (!isset($params['Region']))
             $params['Region'] = $this->_defaultRegion;
-
+    
         require_once QCLOUDAPI_ROOT_PATH . '/Common/Request_Upload.php';
-
+        
         $request['method'] = $this->_requestMethod;
         $request['uri'] = $this->_serverUri;
         $request['host'] = $this->_serverHost;
         $request['port'] = $this->_serverPort;
         $request['query'] = http_build_query($params);
-
+        
         $response = QcloudApi_Common_Request_Upload::send($params, $this->_secretId, $this->_secretKey, $request,$data);
-
+    
         return $response;
     }
 }
