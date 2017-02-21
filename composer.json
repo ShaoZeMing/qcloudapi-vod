@@ -5,7 +5,7 @@
     {
       "name": "shaozeming",
       "email": "szm19920426@gmail.com",
-      "homepage": "http://www.4d4k.com"
+      "homepage": "http://blog.4d4k.com"
     }
   ],
   "require": {
@@ -14,7 +14,7 @@
   "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
-      "shaozeming\\xunsearch\\": "src/wrapper"
+      "shaozeming\\api_vod\\": "src/wrapper"
     },
     "classmap": [
       "src/QcloudApi/QcloudApi.php"
