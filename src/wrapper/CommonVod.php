@@ -81,7 +81,7 @@ class CommonVod
     }
 
     /**
-     * 获取所有视频分类
+     * 获取所有分类层级
      *
      * @author szm19920426@gmail.com
      *
@@ -90,6 +90,35 @@ class CommonVod
     public function getAllClass()
     {
         return $this->cvn->DescribeAllClass();
+    }
+
+    /**
+     * 获取所有视频分类
+     *
+     * @author szm19920426@gmail.com
+     *
+     * @return mixed
+     */
+    public function getClass()
+    {
+        return $this->cvn->DescribeClass();
+    }
+
+
+    /**
+     * 获取所有视频分类
+     *
+     * @author szm19920426@gmail.com
+     *
+     * @parameter $classId int  分类id
+     *
+     * @parameter $className string  分类新名称
+     *
+     * @return mixed
+     */
+    public function editClass(int $classId,string $className )
+    {
+        return $this->cvn->ModifyClass($classId,$className);
     }
 
 
