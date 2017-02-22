@@ -13,7 +13,7 @@ namespace shaozeming\api_vod;
 class VideoUpload
 {
     protected $_config = [
-        'SecretId' => 'AKIDG6a*****************',   //腾讯云SecretId
+        'SecretId' => 'AKIDG6a*****************',          //腾讯云SecretId
         'SecretKey' => '7O9y2tznqmx****************',      //腾讯云SecretKey
         'RequestMethod' => 'POST',                                           //上传接口只支持POST方法
         'DefaultRegion' => 'bj',                                             //区域标记，保持默认不需要更改
@@ -47,7 +47,7 @@ class VideoUpload
 
 
     /**
-     * vod点播接口方法
+     * vod点播视频上传接口方法
      *
      * @author szm19920426@gmail.com
      *
@@ -66,11 +66,11 @@ class VideoUpload
 
 
     /**
-     * 删除视频分类
+     * 上传视频
      *
      * @author szm19920426@gmail.com
      *
-     * @parameter $classId int  分类id
+     * @param $package array  上传视频键值对参数,可访问"https://www.qcloud.com/document/product/266/1316#2.-.E8.BE.93.E5.85.A5.E5.8F.82.E6.95.B0"查看
      *
      * @return mixed
      */
@@ -78,5 +78,6 @@ class VideoUpload
     {
         return $this->cvn->MultipartUploadVodFile($package);
     }
+
 
 }

@@ -18,15 +18,13 @@ class ClassApi extends CommonVod
      *
      * @author szm19920426@gmail.com
      *
-     * @parameter $className string  分类名称
-     *
-     * @parameter $parentId int  父类id,默认为0
+     * @param $package array  所需键值对参数，请参考对应文档参数<https://www.qcloud.com/document/product/266/1965>，
      *
      * @return mixed
      */
-    public function createClass( $className, $parentId=0)
+    public function createClass(array $package)
     {
-        return $this->cvn->CreateClass($className,$parentId);
+        return $this->cvn->CreateClass($package);
     }
 
     /**
@@ -59,33 +57,15 @@ class ClassApi extends CommonVod
      *
      * @author szm19920426@gmail.com
      *
-     * @parameter $classId int  分类id
-     *
-     * @parameter $className string  分类新名称
+     * @param $package array  所需键值对参数，请参考对应文档参数<https://www.qcloud.com/document/product/266/1965>，
      *
      * @return mixed
      */
-    public function saveClassName( $classId, $className )
+    public function saveClassName( $package )
     {
-        return $this->cvn->ModifyClass($classId,$className);
+        return $this->cvn->ModifyClass($package);
     }
 
-
-    /**
-     * 修改视频分类
-     *
-     * @author szm19920426@gmail.com
-     *
-     * @parameter $fileId int  视频id
-     *
-     * @parameter $classId int  分类id
-     *
-     * @return mixed
-     */
-    public function saveVideoClass( $fileId, $classId )
-    {
-        return $this->cvn->ModifyVodClass($fileId,$classId);
-    }
 
 
     /**
@@ -93,13 +73,16 @@ class ClassApi extends CommonVod
      *
      * @author szm19920426@gmail.com
      *
-     * @parameter $classId int  分类id
+     * @param $classId int  分类id
      *
      * @return mixed
      */
-    public function deleteClass( $classId)
+    public function deleteClass($classId)
     {
-        return $this->cvn->DeleteClass($classId);
+        $package = [
+            "classId" => $classId,
+        ];
+        return $this->cvn->DeleteClass($package);
     }
 
 }

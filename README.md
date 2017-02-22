@@ -22,9 +22,11 @@
     - src/QcloudApi/Module             核心各个云服务模块类目录
     - src/QcloudApi.php                核心加载中心类文件。
     - src/Wrapper/                     使用操作类目录
-    - src/Wrapper/ClassApi.php         点播分类api类
-    - src/Wrapper/VideoUpload.php      点播视频上传类
     - src/Wrapper/CommonVod.php        点播api公共类
+    - src/Wrapper/ClassApi.php         点播分类api操作类
+    - src/Wrapper/VideoUpload.php      点播视频上传类
+    - src/Wrapper/VideoUpload.php      点播视频api操作类
+    - src/.......(更新中。。。。)
 ```
 
 # 安装
@@ -61,7 +63,53 @@
 
 # 使用
 
-待更新。。。
+## 上传视频demo
+
+```
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+
+error_reporting(E_ALL ^ E_NOTICE);
+require_once  './src/QcloudApi/QcloudApi.php';
+
+$form = <<<ETC
+<form  method='post' enctype='multipart/form-data'>
+<input name=id>
+<input type="file" name = "file">
+<input type=submit>
+</form>
+ETC;
+echo $form;
+
+if (isset($_FILES['file'])) {
+    var_dump('<pre>', $_FILES['file'], '</pre>');
+    $filename = $_FILES['file']['tmp_name'];
+    $config = array(
+        'SecretId' => '**************',        //你的腾讯云SecretId
+        'SecretKey' => '***************',      //你的腾讯云SecretKey
+        'RequestMethod' => 'POST',             //上传接口只支持POST方法
+        'DefaultRegion' => 'bj',               //区域标记，保持默认不需要更改
+        'ServerPort' => ''                     //端口默认是80，不需要设置
+    );
+    $vod = new \shaozeming\api_vod\VideoUpload($config);
+//要输入的参数
+    $package = array(
+        'fileName' => $_FILES['file']['tmp_name'],                                              //文件的绝对路径，包含文件名
+        'dataSize' => 1024 * 1024 * 5,                                       //分片大小，建议使用默认值5MB
+        'isTranscode' => 0,                                                  //是否转码
+        'isScreenshot' => 0,                                                 //是否截图
+        'isWatermark' => 0,                                                  //是否添加水印
+        'isTranscode' => 1,                                                  //是否转码
+        'notifyUrl' => ""                                                     //转码完成后的回调地址，不转码此项无效
+       //.......
+    );
+    $vod->videoUpload($package);
+}
+```
+
+更新中。。。
 
 
 
