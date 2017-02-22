@@ -15,8 +15,8 @@ class CommonVod
 {
 
     protected $_config = [
-        'SecretId' => 'AKsGv6achVIpu1YC0GOzzFamLyaFrtZSQBWV',   //腾讯云SecretId,
-        'SecretKey' => '769y2dznqmxwxARpbcNqQz4fh9yOlFjA',      //腾讯云SecretKey
+        'SecretId' => 'AKsGv6********************',   //腾讯云SecretId,
+        'SecretKey' => '769y2dznqm*****************',      //腾讯云SecretKey
         'RequestMethod' => 'GET',                               //请求方式
         'DefaultRegion' => 'bj',
     ];  //必要的配置
