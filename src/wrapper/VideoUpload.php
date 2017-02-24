@@ -8,7 +8,7 @@
  * Time: 10:14
  */
 namespace shaozeming\api_vod;
-require_once dirname(__DIR__)."/QcloudApi/QcloudApi.php";
+require_once dirname(__DIR__) . "/QcloudApi/QcloudApi.php";
 
 
 class VideoUpload
@@ -22,7 +22,7 @@ class VideoUpload
 
     ];  //必要的配置
 
-    public  $cvn;   //接口对象
+    protected $cvn;   //接口对象
 
 
     /**
@@ -34,13 +34,13 @@ class VideoUpload
      *
      * @return mixed
      */
-    public function __construct(array $config=[])
+    public function __construct(array $config = [])
     {
-        if(!is_array($config)||empty($config)){
+        if (!is_array($config) || empty($config)) {
             return false;
         }
         $this->_config = array_merge($this->_config, $config);
-        $this->cvn= $this->loadVod();
+        $this->cvn = $this->loadVod();
 
     }
 
@@ -55,13 +55,11 @@ class VideoUpload
      */
     public function setConfig(array $config)
     {
-        if(!is_array($config)){
+        if (!is_array($config)) {
             return false;
         }
         $this->_config = array_merge($this->_config, $config);
     }
-
-
 
 
     /**
@@ -76,11 +74,10 @@ class VideoUpload
         try {
             $cvm = \QcloudApi::load(\QcloudApi::MODULE_VOD_UPLOAD, $this->_config);
         } catch (\Exception $e) {
-            throw new \Exception("c=VideoUpload,a=loadVod,msg=".$e->getMessage());
+            throw new \Exception("c=VideoUpload,a=loadVod,msg=" . $e->getMessage());
         }
         return $cvm;
     }
-
 
 
     /**
@@ -96,7 +93,7 @@ class VideoUpload
      *
      * @return mixed
      */
-    public function videoUpload($fileName,$notifyUrl='',$isScreenshot=0,$isWatermark=0,$dataSize=1024 * 1024 * 5)
+    public function videoUpload($fileName, $notifyUrl = '', $isScreenshot = 0, $isWatermark = 0, $dataSize = 1024 * 1024 * 5)
     {
         $package = array(
             'fileName' => $fileName,                         //文件的绝对路径，包含文件名
@@ -107,6 +104,41 @@ class VideoUpload
             'notifyUrl' => $notifyUrl,                       //转码完成后的回调地址，不转码此项无效
         );
         return $this->cvn->MultipartUploadVodFile($package);
+    }
+
+
+    /**
+     * 快捷上传视频
+     *
+     * @author szm19920426@gmail.com
+     *
+     * @param $fileName string 视频名称
+     * @param $notifyUrl string 上传成功后转码完成后的回调地址
+     * @param $pullUrl   string    拉去地址url
+     * @param $classId int  分类ID
+     *
+     * @return mixed
+     */
+    public function videoUrlUpload($pullUrl, $fileName, $classId = -1, $notifyUrl = '')
+    {
+        //是否输入分类
+        if ($classId == -1) {
+            $package = array(
+                'pullset.1.url' => $pullUrl,                     //文件的url
+                'pullset.1.fileName	' => $fileName,              //文件名称
+                'isTranscode' => 1,                               //是否转码
+                'pullset.1.notifyUrl' => $notifyUrl,             //转码完成后的回调地址，不转码此项无效
+            );
+        } else {
+            $package = array(
+                'pullset.1.url' => $pullUrl,                     //文件的绝对路径，包含文件名
+                'pullset.1.fileName	' => $fileName,              //分片大小，建议使用默认值5MB
+                'isTranscode' => 1,                               //是否转码
+                'pullset.1.notifyUrl' => $notifyUrl,             //转码完成后的回调地址，不转码此项无效
+                'pullset.n.classId' => $classId                  //所属分类
+            );
+        }
+        return $this->cvn->MultiPullVodFile($package);
     }
 
 
