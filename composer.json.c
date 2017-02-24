@@ -1,0 +1,23 @@
+{
+  "name": "shaozeming/qcloudapi-vod",
+  "description": "php sdk for www.qcloud.com vod service",
+  "authors": [
+    {
+      "name": "shaozeming",
+      "email": "szm19920426@gmail.com",
+      "homepage": "http://blog.4d4k.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "shaozeming\\api_vod\\": "src/Wrapper"
+    },
+    "classmap": [
+      "src/QcloudApi/QcloudApi.php"
+    ]
+  }
+}

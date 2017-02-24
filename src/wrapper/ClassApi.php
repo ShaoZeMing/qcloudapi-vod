@@ -18,35 +18,47 @@ class ClassApi extends CommonVod
      *
      * @author szm19920426@gmail.com
      *
-     * @param $package array  所需键值对参数，请参考对应文档参数<https://www.qcloud.com/document/product/266/1965>，
+     * @param $className string  分类名称，
+     * @param $parentId int  父类ID，默认-1顶级，
      *
      * @return mixed
      */
-    public function createClass(array $package)
+    public function createClass($className,$parentId = -1)
     {
+        if($parentId== -1){
+            $package=[
+                'className'=>$className,
+            ];
+        }else{
+            $package=[
+                'className'=>$className,
+                'parentId'=>$parentId,
+            ];
+        }
+
         return $this->cvn->CreateClass($package);
     }
 
     /**
-     * 获取所有分类层级
+     * 获取所有分类层级结构数据
+     *
+     * @author szm19920426@gmail.com
+     *
+     * @return mixed
+     */
+    public function getLevelAllClass()
+    {
+        return $this->cvn->DescribeAllClass();
+    }
+
+    /**
+     * 获取所有视频分类分层级结构
      *
      * @author szm19920426@gmail.com
      *
      * @return mixed
      */
     public function getAllClass()
-    {
-        return $this->cvn->DescribeAllClass();
-    }
-
-    /**
-     * 获取所有视频分类
-     *
-     * @author szm19920426@gmail.com
-     *
-     * @return mixed
-     */
-    public function getClass()
     {
         return $this->cvn->DescribeClass();
     }
