@@ -34,14 +34,31 @@ class VideoUpload
      *
      * @return mixed
      */
-    public function __construct(array $config)
+    public function __construct(array $config=[])
     {
-        if(!is_array($config)){
+        if(!is_array($config)||empty($config)){
             return false;
         }
         $this->_config = array_merge($this->_config, $config);
         $this->cvn= $this->loadVod();
 
+    }
+
+    /**
+     * 设置配置属性方法
+     *
+     * $config array 配置属性同上面属性
+     *
+     * @author szm19920426@gmail.com
+     *
+     * @return mixed
+     */
+    public function setConfig(array $config)
+    {
+        if(!is_array($config)){
+            return false;
+        }
+        $this->_config = array_merge($this->_config, $config);
     }
 
 
@@ -67,7 +84,34 @@ class VideoUpload
 
 
     /**
-     * 上传视频
+     * 快捷上传视频
+     *
+     * @author szm19920426@gmail.com
+     *
+     * @param $fileName string 视频文件
+     * @param $notifyUrl string 上传成功后转码完成后的回调地址
+     * @param $isScreenshot int 是否截图
+     * @param $isWatermark int  是否添加水印
+     * @param $dataSize int   视频分片大小
+     *
+     * @return mixed
+     */
+    public function videoUpload($fileName,$notifyUrl='',$isScreenshot=0,$isWatermark=0,$dataSize=1024 * 1024 * 5)
+    {
+        $package = array(
+            'fileName' => $fileName,                         //文件的绝对路径，包含文件名
+            'dataSize' => $dataSize,                         //分片大小，建议使用默认值5MB
+            'isScreenshot' => $isScreenshot,                 //是否截图
+            'isWatermark' => $isWatermark,                   //是否添加水印
+            'isTranscode' => 1,                               //是否转码
+            'notifyUrl' => $notifyUrl,                       //转码完成后的回调地址，不转码此项无效
+        );
+        return $this->cvn->MultipartUploadVodFile($package);
+    }
+
+
+    /**
+     * 上传视频自定义方法，
      *
      * @author szm19920426@gmail.com
      *
@@ -75,8 +119,9 @@ class VideoUpload
      *
      * @return mixed
      */
-    public function videoUpload(array $package)
+    public function videoUploadInfo(array $package)
     {
+
         return $this->cvn->MultipartUploadVodFile($package);
     }
 

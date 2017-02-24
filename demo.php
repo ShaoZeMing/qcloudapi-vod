@@ -14,8 +14,8 @@ ETC;
 echo $form;
 if (isset($_GET['name'])) {
     $config = array(
-        'SecretId' => 'AKIDG*****************',   //腾讯云SecretId
-        'SecretKey' => '7O9y2tz***************',      //腾讯云SecretKey
+        'SecretId' => 'AKIDG*****************',   //你的腾讯云SecretId
+        'SecretKey' => '7O9y2tz***************',      //你的腾讯云SecretKey
         'RequestMethod' => 'GET',                                           //上传接口只支持POST方法
         'DefaultRegion' => 'bj',                                             //区域标记，保持默认不需要更改
     );

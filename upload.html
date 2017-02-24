@@ -1,11 +1,458 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>视频上传</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="//qzonestyle.gtimg.cn/open_proj/proj_qcloud_v2/qcloud_2015/css/global.css?v=20150604" rel="stylesheet"
+          media="screen">
+    <title>上传WebSDK-HTML5</title>
+    <style type="text/css">
+        body, div {
+            margin: 0px;
+            padding: 0px;
+        }
 
+        #main1 {
+            margin: 1.5em 0px auto;
+            overflow: visible;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        #browser {
+            margin: 1.5em auto;
+            overflow: visible;
+            text-align: center;
+            font-size: 1.1em;
+            max-width: 700px;
+        }
+
+        .head-tool, .head-tool .head-tool-inner, .head-menu, .head-menu .navigation-inner, .tc-footer .tc-footer-columns, .tc-footer {
+            min-width: 400px
+        }
+    </style>
 </head>
+
 <body>
+<div class="head-menu">
+    <div class="navigation-up">
+        <div class="navigation-inner">
+            <div class="logo-area">
+                <h1>
+                    <a href="//www.qcloud.com" class="logo-1" hotrep="hp.header.hp">
+                        <img src="//qzonestyle.gtimg.cn/open_proj/proj_qcloud_v2/qcloud_2015/css/img/global/internet-plus.png"
+                             alt="互联网+">
+                    </a>
+                </h1>
+                <span class="stick"></span>
+
+                <h1>
+                    <a href="//www.qcloud.com" class="logo-2" hotrep="hp.header.hp">
+                        <img src="//qzonestyle.gtimg.cn/open_proj/proj_qcloud_v2/qcloud_2015/css/img/global/qcloud-logo.png"
+                             alt="腾讯云">
+                    </a>
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main1">
+    云点播Web上传Sdk <span style="color:red;">当前支持HTML5上传</span> 使用范例如下
+    <span style="margin-left: 20px;"><a target="_blank" href="//video.qcloud.com/sdk/api.html">API使用说明</a></span>
+</div>
+<div id="browser">
+    <h1>支持浏览器及其版本列表</h1>
+    <style>
+        #browser table td {
+            border: 1px solid #aaa;
+            padding: 0.2em 0.4em;
+        }
+    </style>
+    <table style="width: 100%;">
+        <thead>
+        <tr>
+            <th>IE</th>
+            <th>Edge</th>
+            <th>Firefox</th>
+            <th>chrome</th>
+            <th>safari</th>
+            <th>opera</th>
+            <th>andriod</th>
+            <th>ios</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>10+</td>
+            <td>12+</td>
+            <td>3.5+</td>
+            <td>4+</td>
+            <td>5+</td>
+            <td>12.1+</td>
+            <td>4.4+</td>
+            <td>ios safari 5.1+</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>魅族默认浏览器需flyme5.0+</td>
+            <td>内嵌webview无法正常使用<br/>包括Chrome,QQ浏览器等<br/>目前仅手Q和微信正常</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+
+    .out {
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        margin: 0px auto;
+        margin-top: 50px;
+    }
+
+    #pickfiles {
+        width: 98px;
+        height: 28px;
+
+    }
+
+    .result {
+        width: 300px;
+        height: 200px;
+        margin: 0px auto;
+        border: solid 1px red;
+    }
+
+    .line {
+        width: 380px;
+        margin: 2px auto;
+        min-height: 20px;
+        font-size: 13px;
+        border-bottom: 1px solid silver;
+        padding: 5px 0px;
+    }
+
+    .count {
+        width: 300px;
+        height: 50px;
+        margin: 0px auto;
+        border: solid 1px red;
+        font-size: 13px;
+    }
+
+    .btn-wrap button {
+        width: 100px;
+        height: 35px;
+    }
+
+    .delete {
+        cursor: pointer;
+        padding: 0px 5px;
+        text-decoration: underline;
+        color: red;
+    }
+
+    #secret .head {
+        padding: 5px;
+
+        margin-bottom: 20px;
+    }
+
+    #secret .input_area {
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    #secret .input_area span {
+        display: inline-block;
+        min-width: 83px;
+    }
+
+    #secret .head a {
+        font-weight: bold;
+    }
+
+    #secret input[type=text] {
+        width: 300px;
+        height: 28px;
+    }
+
+    #secret button {
+        margin: 10px;
+        padding: 5px;
+        width: 98px;
+    }
+
+</style>
+<div class="out" style="  width: 400px;" id="secret">
+    <div class="head">请先输入云API密钥信息 点击查看<a href="https://console.qcloud.com/capi" target="_blank">云API密钥</a></div>
+    <div class="input_area"><span>secretId : </span> <input type="text" name="secret_id" id="secret_id" value=""/></div>
+    <div class="input_area"><span>secret_key : </span> <input type="text" name="secret_key" id="secret_key" value=""
+                                                              placeholder="请不要暴露secret_key给外部用户"/>
+        <a href="/sdk/api.html" target="_blank">如何设置安全签名?</a>
+    </div>
+    <div class="input_area"><span>转 码: </span>
+        开启<input type="radio" name="transcode" value="1" checked/>
+        &nbsp;&nbsp;&nbsp;禁用<input type="radio" name="transcode" value="0"/>
+    </div>
+    <div class="input_area"><span>水 印: </span>
+        开启<input type="radio" name="watermark" value="1"/>
+        &nbsp;&nbsp;&nbsp;禁用<input type="radio" name="watermark" value="0" checked/>
+    </div>
+    <div class="input_area"><span>分类ID: </span>
+        <input type="input" name="classId" value=""/>
+        <br/>上传可以指定视频所属分类; 如果不需要指定，请不要设置，错误值会影响上传正确性
+    </div>
+    <button id="start">确定</button>
+    <div style="font-size: 13px;
+  text-align: left;">注意：因为涉及H5计算SHA使用到worker，需要将下面脚本放到所在服务器根目录下<a
+            href="//qzonestyle.gtimg.cn/open/qcloud/js/vod/sdk/calculator_worker_sha1.js"
+            target="_blank">计算SHA的脚本</a>
+        <br/> 且通过 <a href="/calculator_worker_sha1.js" target="_blank">http://您域名/calculator_worker_sha1.js</a> 可以访问
+    </div>
+</div>
+<div class="out" id='pickfiles_area' style="display:none;">
+    <button id="pickfiles" type="button">添加文件</button>
+</div>
+<div class="result" id="result" style="width:400px;display: none;"></div>
+<div class="count" id="count" style="width:400px;display: none;"></div>
+<div class="out btn-wrap" id="btnarea" style="width:400px;display:none;">
+    <button id="start_upload" type="button">开始上传</button>
+    <button id="stop_upload" type="button">取消上传</button>
+    <button id="re_upload" type="button">重新上传</button>
+</div>
+<div class="out" id="error" style="color: red;
+  width: 400px;
+  text-align: left;"></div>
+<div>
+
+
+</div>
+<script src="//qzonestyle.gtimg.cn/open/qcloud/js/vod/sdk/uploaderh5.js" charset="utf-8"></script>
+<!--<script src="//qzonestyle.gtimg.cn/open/qcloud/js/vod/sdk/uploaderh5V3.js" charset="utf-8"></script>-->
+<script type="text/javascript">
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    (function () {
+        var $ = qcVideo.get('$');
+        var Version = qcVideo.get('Version');
+        if (!qcVideo.uploader.supportBrowser()) {
+            if (Version.IS_MOBILE) {
+                alert('当前浏览器不支持上传，请升级系统版本或者下载最新的chrome浏览器');
+            } else {
+                alert('当前浏览器不支持上传，请升级浏览器或者下载最新的chrome浏览器');
+            }
+            return;
+        }
+        $('#start').on('click', function (e) {
+            var secretId = $('#secret_id').val();
+            if (!!secretId) {
+
+                $('#result').show();
+                $('#count').show();
+                $('#pickfiles_area').show();
+                $('#btnarea').show();
+                $('#secret').hide();
+                $('#error').show();
+
+                accountDone(
+                        'pickfiles',
+                        secretId,
+                        $('input[name="transcode"]:checked').val(),
+                        $('input[name="watermark"]:checked').val(),
+                        null,
+                        $('input[name="classId"]').val()
+                );
+            }
+        });
+
+    })();
+
+    /**
+     *
+     * @param upBtnId 上传按钮ID
+     * @param secretId 云api secretId
+     * @param isTranscode 是否转码
+     * @param isWatermark 是否设置水印
+     * @param [transcodeNotifyUrl] 转码成功后的回调
+     * @param [classId] 分类ID
+     */
+    function accountDone(upBtnId, secretId, isTranscode, isWatermark, transcodeNotifyUrl, classId) {
+
+        var $ = qcVideo.get('$')
+                , ErrorCode = qcVideo.get('ErrorCode')
+                , Log = qcVideo.get('Log')
+                , JSON = qcVideo.get('JSON')
+                , util = qcVideo.get('util')
+                , Code = qcVideo.get('Code')
+                , Version = qcVideo.get('Version')
+                ;
+        //您的secretKey
+            var secret_key = $('#secret_key').val() || '';
+        qcVideo.uploader.init(
+                //1: 上传基础条件
+                {
+                    web_upload_url: 'https://vod.qcloud.com/v2/index.php',
+//                    web_upload_url: 'https://vod2.qcloud.com/v3/index.php',
+                    secretId: secretId, // 云api secretId
+
+                    //云api secretKey : 选填参数 （secretKey不能暴露给外部用户，建议只在内部系统使用该参数）
+                    secretKey: secret_key,
+
+                    /*
+                     @desc 获取签名的方法
+
+                     //server端实现逻辑
+                     // 1:首先 将argStr ，使用secretKey做sha1加密，得到结果 result
+                     // 2:最后 将result做base64后返回
+
+                     //附nodejs示例实现
+                     //   crypto.createHmac('sha1', '你的secretKey').update(argStr, 'utf-8').digest().toString('base64');
+                     //附php示例实现
+                     //   base64_encode(hash_hmac('sha1', $argStr, $secretKey, true));
+                     //附java示例实现 感谢 更深的蓝 友情赞助
+                     //   http://video.qcloud.com/sdk/GetSigServlet.java.txt
+
+                     getSignature: function(argStr,cb){
+                     //注意：出于安全考虑， 服务端接收argStr这个参数后，需要校验其中的Action参数是否为 "MultipartUploadVodFile",用来证明该参数标识上传请求
+                     $.ajax({
+                     'dataType': 'json',
+                     'url': 'http://yourdomain/getsig?argStr='+encodeURIComponent(argStr),
+                     'success': function(d){
+                     cb(d['result']);
+                     }
+                     });
+                     },
+                     */
+                    upBtnId: upBtnId, //上传按钮ID（任意页面元素ID）
+                    isTranscode: isTranscode,//是否转码
+                    isWatermark: isWatermark//是否设置水印
+                    //,after_sha_start_upload: false//sha计算完成后，开始上传 (默认关闭立即上传)
+                    //,sha1js_path: 'http://您的域名/您的设置目录/calculator_worker_sha1.js' //计算sha1的位置
+                    , disable_multi_selection: false //禁用多选 ，默认为false
+
+                    , transcodeNotifyUrl: transcodeNotifyUrl//(转码成功后的回调地址)isTranscode==true,时开启； 回调url的返回数据格式参考  https://www.qcloud.com/document/product/266/1407
+                    , classId: classId
+                    // mime_types, 默认是常用的视频和音频文件扩展名，如MP4, MKV, MP3等, video_only 默认为false，可允许音频文件上传
+                    , filters: {max_file_size: '8gb', mime_types: [], video_only: true}
+                    , forceH5Worker: !!parseInt(getParameterByName('forceH5Worker')) || false
+                }
+                //2: 回调
+                , {
+
+                    /**
+                     * 更新文件状态和进度
+                     * @param args { id: 文件ID, size: 文件大小, name: 文件名称, status: 状态, percent: 进度 speed: 速度, errorCode: 错误码,serverFileId: 后端文件ID }
+                     */
+                    onFileUpdate: function (args) {
+                        if (args.code == Code.SHA_FAILED)
+                            return alert('该浏览器无法计算SHA')
+                        var $line = $('#' + args.id);
+                        if (!$line.get(0)) {
+                            $('#result').append('<div class="line" id="' + args.id + '"></div>');
+                            $line = $('#' + args.id);
+                        }
+
+                        var finalFileId = '';
+
+                        if (args.code == Code.UPLOAD_DONE) {
+                            finalFileId = '文件ID>>' + args.serverFileId
+                        }
+
+                        $line.html(''
+                                + '文件名：' + args.name
+                                + ' >> 大小：' + util.getHStorage(args.size)
+                                + ' >> 状态：' + util.getFileStatusName(args.status) + ''
+                                + ( args.percent ? ' >> 进度：' + args.percent + '%' : '')
+                                + ( args.speed ? ' >> 速度：' + args.speed + '' : '')
+                                + '<span data-act="del" class="delete">删除</span>'
+                                + finalFileId
+                        );
+                    },
+
+                    /**
+                     * 文件状态发生变化
+                     * @param info  { done: 完成数量 , fail: 失败数量 , sha: 计算SHA或者等待计算SHA中的数量 , wait: 等待上传数量 , uploading: 上传中的数量 }
+                     */
+                    onFileStatus: function (info) {
+                        $('#count').text('各状态总数-->' + JSON.stringify(info));
+
+                    },
+
+                    /**
+                     *  上传时错误文件过滤提示
+                     * @param args {code:{-1: 文件类型异常,-2: 文件名异常} , message: 错误原因 ， solution: 解决方法}
+                     */
+                    onFilterError: function (args) {
+                        var msg = 'message:' + args.message + (args.solution ? (';solution==' + args.solution) : '');
+                        $('#error').html(msg);
+                    }
+
+                }
+        );
+//        qcVideo.uploader.initUGC({
+//            upBtnId: upBtnId,
+//            getSignature: function(argObj, done) {
+//                argObj['s'] = $('#secret_id').val()
+//                argObj['uid'] = '随便填'
+//                var argStr = ''
+//                for (var a in argObj)
+//                    argStr += a + '=' + encodeURIComponent(argObj[a]) + '&';
+//                argStr = argStr.substr(0, argStr.length - 1)
+//                var sha = CryptoJS.HmacSHA1(argStr, $('#secret_key').val())
+//                sha.concat(CryptoJS.enc.Utf8.parse(argStr))
+//                done(CryptoJS.enc.Base64.stringify(sha));
+//            }
+//        }, {
+//            onFileUpdate: function(args) {console.log(args)},
+//            onFileStatus: function(args) {console.log(args)},
+//            onFilterError: function(args) {console.log(args)}
+//        })
+        //事件绑定
+        $('#start_upload').on('click', function () {
+            //@api 上传
+            qcVideo.uploader.startUpload();
+        });
+
+        $('#stop_upload').on('click', function () {
+            //@api 暂停上传
+            qcVideo.uploader.stopUpload();
+        });
+
+        $('#re_upload').on('click', function () {
+            //@api 恢复上传（错误文件重新）
+            qcVideo.uploader.reUpload();
+        });
+
+        $('#result')
+
+                .on('click', '[data-act="del"]', function (e) {
+                    var $line = $(this).parent();
+                    var fileId = $line.get(0).id;
+
+                    Log.debug('delete', fileId);
+
+                    $line.remove();
+                    //@api 删除文件
+                    qcVideo.uploader.deleteFile(fileId);
+                });
+    }
+    ;
+
+    $('#start').click();
+</script>
 
 </body>
 </html>

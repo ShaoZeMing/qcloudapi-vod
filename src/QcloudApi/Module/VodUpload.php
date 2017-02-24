@@ -146,7 +146,7 @@ class QcloudApi_Module_VodUpload extends QcloudApi_Module_Base
                     continue;
                 }
             }
-            
+//            var_dump('<pre>',$response,'<pre>');
             //执行成功
             if($response['code'] == 0)
             {
@@ -166,7 +166,7 @@ class QcloudApi_Module_VodUpload extends QcloudApi_Module_Base
             }
             else
             {
-                echo $response['msg'];
+                echo $response['message'];      /*返回参数没有msg索引，只有$response['message']*/
                 return false;
             }
         }       
