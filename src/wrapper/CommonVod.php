@@ -9,7 +9,7 @@
  */
 
 namespace shaozeming\api_vod;
-
+require_once dirname(__DIR__)."/QcloudApi/QcloudApi.php";
 
 class CommonVod
 {

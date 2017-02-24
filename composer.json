@@ -15,9 +15,6 @@
   "autoload": {
     "psr-4": {
       "shaozeming\\api_vod\\": "src/Wrapper"
-    },
-    "classmap": [
-      "src/QcloudApi/QcloudApi.php"
-    ]
+    }
   }
 }
