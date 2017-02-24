@@ -17,8 +17,8 @@ if (isset($_FILES['file'])) {
 
     $filename = $_FILES['file']['tmp_name'];
     $config = array(
-        'SecretId' => 'AKIDG6achVIpu1YC0GOzzFamLyaFrtZSQBWV',   //腾讯云SecretId
-        'SecretKey' => '7O9y2tznqmxwxARpbcNqQz4fh9yOlFjA',      //腾讯云SecretKey
+        'SecretId' => 'AKIDG6achVI***************8',   //腾讯云SecretId
+        'SecretKey' => '7O9y2tzn******************',      //腾讯云SecretKey
         'RequestMethod' => 'POST',                                           //上传接口只支持POST方法
         'DefaultRegion' => 'bj',                                             //区域标记，保持默认不需要更改
         'ServerPort' => ''                                                 //端口默认是80，不需要设置
