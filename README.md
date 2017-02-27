@@ -80,7 +80,8 @@ $vod->videoUpload($file);  //上传视频
 
 ## videoApi类方法预览
 
-** 功能 ** | ** 方法名称 ** | **参数**
+** 功能 | 方法名称 | 参数**
+
 ```
 创建视频分类      	          CreateClass              $className,[$parentId]
 获取用户所有分类层级	      getLevelAllClass         无
@@ -95,8 +96,10 @@ $vod->videoUpload($file);  //上传视频
 对视频文件转码     	          convertVideoFile         $fileId
 删除视频文件      	          deleteVideo              $fileId
 ```
-## videoApi类方法预览
-** 功能 ** | ** 方法名称 ** | **参数**
+
+## videoUpload上传类方法预览
+
+** 功能 | 方法名称 | 参数**
 
 ```
 视频上传                videoUpload          $fileName, [$notifyUrl], [$isScreenshot], [$isWatermark], [$dataSize]
