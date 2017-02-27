@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
-
 $form = <<<ETC
 <form method='post' enctype='multipart/form-data'>
     选择上传文件<input type="file" name = "file">
@@ -27,7 +26,7 @@ if (isset($_FILES['file'])) {
     $file = $filePath . date("YmdHis") . $_FILES['file']['name'];
     $mv = move_uploaded_file($filename, $file);
     if ($mv) {
-        $re = $vod->videoUpload($file,1);
+        $re = $vod->videoUpload($file);
        @unlink($file);
     }
 

@@ -23,9 +23,8 @@
     - src/QcloudApi.php                核心加载中心类文件。
     - src/Wrapper/                     使用操作类目录
     - src/Wrapper/CommonVod.php        点播api公共类
-    - src/Wrapper/ClassApi.php         点播分类api操作类
     - src/Wrapper/VideoUpload.php      点播视频上传类
-    - src/Wrapper/VideoUpload.php      点播视频api操作类
+    - src/Wrapper/VideoApi.php         点播视频api操作类
     - src/.......(更新中。。。。)
 ```
 
@@ -66,53 +65,49 @@
 ## 上传视频demo
 
 ```
-<?php
+$config = array(
+    'SecretId' => 'AKIDG*****************',   //你的腾讯云SecretId
+    'SecretKey' => '7O9y2tz***************',      //你的腾讯云SecretKey
+    'RequestMethod' => 'POST',                                           //上传接口只支持POST方法
+    'DefaultRegion' => 'bj',                                             //区域标记，保持默认不需要更改
+    'ServerPort' => ''                                                   //端口默认是80，不需要设置
+);
+$vod = new \shaozeming\api_vod\VideoUpload($config);  //要输入的参数
+$vod->videoUpload($file);  //上传视频
 
-require_once __DIR__ . '/vendor/autoload.php';
-
-
-error_reporting(E_ALL ^ E_NOTICE);
-require_once  './src/QcloudApi/QcloudApi.php';
-
-$form = <<<ETC
-<form  method='post' enctype='multipart/form-data'>
-<input name=id>
-<input type="file" name = "file">
-<input type=submit>
-</form>
-ETC;
-echo $form;
-
-if (isset($_FILES['file'])) {
-    var_dump('<pre>', $_FILES['file'], '</pre>');
-    $filename = $_FILES['file']['tmp_name'];
-    $config = array(
-        'SecretId' => '**************',        //你的腾讯云SecretId
-        'SecretKey' => '***************',      //你的腾讯云SecretKey
-        'RequestMethod' => 'POST',             //上传接口只支持POST方法
-        'DefaultRegion' => 'bj',               //区域标记，保持默认不需要更改
-        'ServerPort' => ''                     //端口默认是80，不需要设置
-    );
-    $vod = new \shaozeming\api_vod\VideoUpload($config);
-//要输入的参数
-    $package = array(
-        'fileName' => $_FILES['file']['tmp_name'],                                              //文件的绝对路径，包含文件名
-        'dataSize' => 1024 * 1024 * 5,                                       //分片大小，建议使用默认值5MB
-        'isTranscode' => 0,                                                  //是否转码
-        'isScreenshot' => 0,                                                 //是否截图
-        'isWatermark' => 0,                                                  //是否添加水印
-        'isTranscode' => 1,                                                  //是否转码
-        'notifyUrl' => ""                                                     //转码完成后的回调地址，不转码此项无效
-       //.......
-    );
-    $vod->videoUpload($package);
-}
 ```
+由于后端上传视频有是基于你服务器后再进行云上传，个人觉得这种方式不推荐。如果真有上传接口需求，可使用web_js 方法上传，可访问web_upload_demo.html进行修改操作。
 
-更新中。。。
+## 方法预览
 
+- - - - - - - - - - - -
+createClass |
+- - - - - - - - - - - -
 
+- - - - - - - - - - - -
 
+接口功能	Action ID
+创建视频分类	CreateClass
+获取用户所有分类层级	DescribeAllClass
+获取视频分类列表	DescribeClass
+修改分类名	ModifyClass
+修改视频分类	ModifyVodClass
+删除视频分类	DeleteClass
+视频上传	MultipartUploadVodFile
+URL拉取视频上传	MultiPullVodFile
+获取视频信息列表	DescribeVodInfo
+获取视频播放信息列表	DescribeVodPlayInfo
+获取视频详细信息	DescribeVodPlayUrls
+修改视频信息	ModifyVodInfo
+批量获取视频截图地址	CreateScreenShot
+获取播放器时间轴批量缩略图	DescribeScreenShot
+为视频设置显示封面	DescribeVodCover
+对视频文件转码	ConvertVodFile
+批量获取转码时产生的截图	DescribeAutoScreenShot
+增加视频标签	CreateVodTags
+删除视频标签	DeleteVodTags
+删除视频文件	DeleteVodFile
+获取录播视频播放信息-互动直播用户专用	DescribeRecordPlayInfo
 
 
 
