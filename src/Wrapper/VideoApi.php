@@ -73,8 +73,12 @@ class VideoApi extends CommonVod
      *
      * @return mixed
      */
-    public function saveClassName( $package )
+    public function saveClassName( $classId,$className )
     {
+        $package = [
+            "classId" => $classId,
+            "className" => $className,
+        ];
         return $this->cvn->ModifyClass($package);
     }
 

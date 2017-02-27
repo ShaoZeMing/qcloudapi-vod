@@ -108,7 +108,7 @@ class VideoUpload
 
 
     /**
-     * 快捷上传视频
+     * URL拉取上传视频
      *
      * @author szm19920426@gmail.com
      *

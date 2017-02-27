@@ -78,36 +78,30 @@ $vod->videoUpload($file);  //上传视频
 ```
 由于后端上传视频有是基于你服务器后再进行云上传，个人觉得这种方式不推荐。如果真有上传接口需求，可使用web_js 方法上传，可访问web_upload_demo.html进行修改操作。
 
-## 方法预览
+## videoApi类方法预览
 
-- - - - - - - - - - - -
-createClass |
-- - - - - - - - - - - -
+** 功能 ** | ** 方法名称 ** | **参数**
+```
+创建视频分类      	          CreateClass              $className,[$parentId]
+获取用户所有分类层级	      getLevelAllClass         无
+获取视频分类列表   	          getAllClass              无
+修改分类名	                  saveClassName            $classId,$className
+修改视频分类       	          saveVideoClass           $fileId, $classId
+删除视频分类      	          deleteClass              $classId
+获取视频信息列表              getVideosInfo            $package   //参考官方文档以键值对数组传入
+获取视频播放信息列表	      getVideoPlayInfo         $package   //参考官方文档以键值对数组传入
+获取视频详细信息	          getVideoPlayUrls         $fileId    //视频ID
+修改视频信息      	          saveVideoInfo            $package   //参考官方文档以键值对数组传入
+对视频文件转码     	          convertVideoFile         $fileId
+删除视频文件      	          deleteVideo              $fileId
+```
+## videoApi类方法预览
+** 功能 ** | ** 方法名称 ** | **参数**
 
-- - - - - - - - - - - -
+```
+视频上传                videoUpload          $fileName, [$notifyUrl], [$isScreenshot], [$isWatermark], [$dataSize]
+URL拉取上传视频         videoUrlUpload       $pullUrl, $fileName, [$classId], [$notifyUrl]
+官方上传视频自定义方法  videoUploadInfo      $package       //参考官方文档以键值对数组传入
 
-接口功能	Action ID
-创建视频分类	CreateClass
-获取用户所有分类层级	DescribeAllClass
-获取视频分类列表	DescribeClass
-修改分类名	ModifyClass
-修改视频分类	ModifyVodClass
-删除视频分类	DeleteClass
-视频上传	MultipartUploadVodFile
-URL拉取视频上传	MultiPullVodFile
-获取视频信息列表	DescribeVodInfo
-获取视频播放信息列表	DescribeVodPlayInfo
-获取视频详细信息	DescribeVodPlayUrls
-修改视频信息	ModifyVodInfo
-批量获取视频截图地址	CreateScreenShot
-获取播放器时间轴批量缩略图	DescribeScreenShot
-为视频设置显示封面	DescribeVodCover
-对视频文件转码	ConvertVodFile
-批量获取转码时产生的截图	DescribeAutoScreenShot
-增加视频标签	CreateVodTags
-删除视频标签	DeleteVodTags
-删除视频文件	DeleteVodFile
-获取录播视频播放信息-互动直播用户专用	DescribeRecordPlayInfo
-
-
+```
 
