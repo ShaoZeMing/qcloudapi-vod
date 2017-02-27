@@ -60,22 +60,59 @@
 注：`$xx_path`指的是基于api文件减压目录路径
 该核心类会自动基于composer.json 加载相应的类文件。
 
-# 使用
+# demo示例
 
-## 上传视频demo
+## Api上传视频
 
 ```
 $config = array(
     'SecretId' => 'AKIDG*****************',   //你的腾讯云SecretId
     'SecretKey' => '7O9y2tz***************',      //你的腾讯云SecretKey
-    'RequestMethod' => 'POST',                                           //上传接口只支持POST方法
-    'DefaultRegion' => 'bj',                                             //区域标记，保持默认不需要更改
-    'ServerPort' => ''                                                   //端口默认是80，不需要设置
 );
 $vod = new \shaozeming\api_vod\VideoUpload($config);  //要输入的参数
 $vod->videoUpload($file);  //上传视频
 
 ```
+## 添加分类
+
+```
+$config = array(
+    'SecretId' => 'AKIDG*****************',   //你的腾讯云SecretId
+    'SecretKey' => '7O9y2tz***************',      //你的腾讯云SecretKey
+);
+$vod = new \shaozeming\api_vod\VideoApi($config);  //要输入的参数
+$vod->createClass("默认分类1");  //添加分类
+
+```
+## 获取层级分类
+
+```
+ $data=$vod->getLevelAllClass();
+
+```
+
+## 获取所有分类
+
+```
+ $data=$vod->getAllClass();
+
+```
+
+## 修改分类名称
+
+```
+ $vod->saveClassName('1608',"我是修改1608后的分类名称");
+
+```
+
+## 获取视频播放Url
+
+```
+ $data=$vod->getVideoPlayUrls('14651978969258625432');
+
+```
+.....更多方法请看下面方法预览
+
 由于后端上传视频有是基于你服务器后再进行云上传，个人觉得这种方式不推荐。如果真有上传接口需求，可使用web_js 方法上传，可访问web_upload_demo.html进行修改操作。
 
 ## videoApi类方法预览
@@ -108,3 +145,6 @@ URL拉取上传视频         videoUrlUpload       $pullUrl, $fileName, [$classI
 
 ```
 
+### 注：在包中有demo.php，video_upload_demo.php,web_js_upload.html文件，都是demo测试文件，可修改对应的SecretId，SecretKey直接在运行环境中查看示例。在点击删除视频时，要确保该文件时刻拷贝或可以删除，否则后果自负。
+
+如果有问题，欢迎访问我的[博客](http://blog.4d4k.com)或[github](https://github.com/ShaoZeMing/QcloudApi-VOD)进行批评指正。
