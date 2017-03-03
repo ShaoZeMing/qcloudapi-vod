@@ -11,7 +11,7 @@
   "require": {
     "php": ">=5.3"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "shaozeming\\api_vod\\": "src/Wrapper"
